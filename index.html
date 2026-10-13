@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JavaScript Function Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>JavaScript Function Checkpoint</h1>
+
+      <div class="grid">
+        <section class="card">
+          <h2>String Manipulation</h2>
+          <label for="stringInput">Enter a sentence</label>
+          <input
+            id="stringInput"
+            type="text"
+            value="hello world from Nady"
+          />
+
+          <button id="reverseStringBtn">Reverse String</button>
+          <button id="countStringBtn">Count Characters</button>
+          <button id="capitalizeStringBtn">Capitalize Words</button>
+
+          <div id="stringOutput" class="output">Results will appear here.</div>
+        </section>
+
+        <section class="card">
+          <h2>Array Functions</h2>
+          <label for="arrayInput">Numbers</label>
+          <input id="arrayInput" type="text" value="12, 8, 25, 3, 19" />
+
+          <label for="filterInput">Filter condition</label>
+          <input id="filterInput" type="text" value="value > 10" />
+
+          <button id="maxBtn">Find Maximum</button>
+          <button id="minBtn">Find Minimum</button>
+          <button id="sumBtn">Sum Array</button>
+          <button id="filterBtn">Filter Array</button>
+
+          <div id="arrayOutput" class="output">Results will appear here.</div>
+        </section>
+
+        <section class="card">
+          <h2>Mathematical Functions</h2>
+          <label for="mathInput">Number</label>
+          <input id="mathInput" type="number" value="7" />
+
+          <label for="fibonacciInput">Fibonacci terms</label>
+          <input id="fibonacciInput" type="number" value="10" min="1" />
+
+          <button id="factorialBtn">Factorial</button>
+          <button id="primeBtn">Prime Check</button>
+          <button id="fibonacciBtn">Generate Fibonacci</button>
+
+          <div id="mathOutput" class="output">Results will appear here.</div>
+        </section>
+      </div>
+    </div>
+
+    <script src="stringmanipulation.js"></script>
+    <script src="arrayfunctions.js"></script>
+    <script src="mathfunctions.js"></script>
+    <script>
+      // Wait until the page is ready before hooking up button actions.
+      document.addEventListener("DOMContentLoaded", function () {
+        const stringOutput = document.getElementById("stringOutput");
+        const arrayOutput = document.getElementById("arrayOutput");
+        const mathOutput = document.getElementById("mathOutput");
+
+        // Do the string work when the user clicks the button.
+        document
+          .getElementById("reverseStringBtn")
+          .addEventListener("click", function () {
+            const value = document.getElementById("stringInput").value;
+            stringOutput.textContent =
+              "Reversed string: " + window.stringFunctions.reverseString(value);
+          });
+
+        // Count the characters in the typed sentence.
+        document
+          .getElementById("countStringBtn")
+          .addEventListener("click", function () {
+            const value = document.getElementById("stringInput").value;
+            stringOutput.textContent =
+              "Character count: " +
+              window.stringFunctions.countCharacters(value);
+          });
+
+        // Capitalize each word in the sentence.
+        document
+          .getElementById("capitalizeStringBtn")
+          .addEventListener("click", function () {
+            const value = document.getElementById("stringInput").value;
+            stringOutput.textContent =
+              "Capitalized text: " +
+              window.stringFunctions.capitalizeWords(value);
+          });
+
+        // Find the biggest number in the list.
+        document
+          .getElementById("maxBtn")
+          .addEventListener("click", function () {
+            const numbers = getNumbersFromInput("arrayInput");
+            arrayOutput.textContent =
+              "Maximum value: " + window.arrayFunctions.findMaxNumber(numbers);
+          });
+
+        // Find the smallest number in the list.
+        document
+          .getElementById("minBtn")
+          .addEventListener("click", function () {
+            const numbers = getNumbersFromInput("arrayInput");
+            arrayOutput.textContent =
+              "Minimum value: " + window.arrayFunctions.findMinNumber(numbers);
+          });
+
+        // Add everything in the array together.
+        document
+          .getElementById("sumBtn")
+          .addEventListener("click", function () {
+            const numbers = getNumbersFromInput("arrayInput");
+            arrayOutput.textContent =
+              "Sum of array: " + window.arrayFunctions.sumArray(numbers);
+          });
+
+        // Filter the list using the condition typed in the box.
+        document
+          .getElementById("filterBtn")
+          .addEventListener("click", function () {
+            const numbers = getNumbersFromInput("arrayInput");
+            const condition = document.getElementById("filterInput").value;
+            const result = window.arrayFunctions.filterArray(
+              numbers,
+              condition,
+            );
+            arrayOutput.textContent =
+              "Filtered array: [" + result.join(", ") + "]";
+          });
+
+        // Work out the factorial for the input value.
+        document
+          .getElementById("factorialBtn")
+          .addEventListener("click", function () {
+            const value = Number(document.getElementById("mathInput").value);
+            mathOutput.textContent =
+              "Factorial: " + window.mathFunctions.factorial(value);
+          });
+
+        // Check if the number is prime.
+        document
+          .getElementById("primeBtn")
+          .addEventListener("click", function () {
+            const value = Number(document.getElementById("mathInput").value);
+            mathOutput.textContent =
+              "Prime check: " + window.mathFunctions.isPrime(value);
+          });
+
+        // Generate the Fibonacci sequence to the chosen length.
+        document
+          .getElementById("fibonacciBtn")
+          .addEventListener("click", function () {
+            const terms = Number(
+              document.getElementById("fibonacciInput").value,
+            );
+            const sequence =
+              window.mathFunctions.generateFibonacciSequence(terms);
+            mathOutput.textContent =
+              "Fibonacci sequence: [" + sequence.join(", ") + "]";
+          });
+
+        // Turn the comma-separated list into a proper array of numbers.
+        function getNumbersFromInput(id) {
+          const raw = document.getElementById(id).value;
+          return raw
+            .split(",")
+            .map(function (item) {
+              return Number(item.trim());
+            })
+            .filter(function (value) {
+              return !Number.isNaN(value);
+            });
+        }
+      });
+    </script>
+  </body>
+</html>
